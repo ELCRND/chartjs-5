@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Средний чек – Линейный график с градиентом</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #000;
+      }
+
+      .chart-card {
+      }
+
+      .chart-card--line {
+        width: 300px;
+        aspect-ratio: 1 / 1;
+        border: 2px solid #363636;
+        border-radius: 52px;
+        overflow: hidden;
+        background: #1a1e1e;
+      }
+
+      .chart-card--multiline {
+        width: 800px;
+        background: #1a1e1e;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Контейнер для удобства -->
+    <div
+      style="
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <!-- <img src="1.png" alt="" style="margin-right: 50px" /> -->
+      <!-- Линейный график с градиентом -->
+      <div class="chart-card chart-card--line">
+        <canvas id="chart-line"></canvas>
+      </div>
+      <div class="chart-card chart-card--line">
+        <canvas id="chart-line-2"></canvas>
+      </div>
+    </div>
+
+    <!-- Контейнер для удобства -->
+    <div
+      style="
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <!-- <img src="2.png" alt="" style="margin-right: 50px" /> -->
+      <!-- multi-line график  -->
+      <div class="chart-card chart-card--multiline">
+        <canvas id="chart-multiline"></canvas>
+      </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
