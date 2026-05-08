@@ -1,3 +1,9 @@
+/**
+ * >>> config.datasets <<< - стилизация плиток, цвета заданы в @param colorPalette
+ * config.options.plugins.tooltip - tooltip
+ * @param values - пустой массив, данные генерируются через  @param createData
+ */
+
 export function initMatrixChart(canvasId = "chart-matrix") {
   const canvas = document.getElementById(canvasId);
   if (!canvas) {
@@ -13,10 +19,6 @@ export function initMatrixChart(canvasId = "chart-matrix") {
 
   const ctx = canvas.getContext("2d");
 
-  const tooltipGradient = ctx.createLinearGradient(0, 0, 0, 400);
-  tooltipGradient.addColorStop(0, "#363636");
-  tooltipGradient.addColorStop(1, "#151515");
-
   const colorPalette = [
     "#241C32",
     "#2F2441",
@@ -27,38 +29,43 @@ export function initMatrixChart(canvasId = "chart-matrix") {
     "#C299FF",
   ];
 
-  function getColor(value) {
-    if (!value) return "#1f1f28";
-    return colorPalette[value];
+  function getColor(value, maxValue = 1000) {
+    if (!value || value <= 0) return colorPalette[0];
+
+    const normalized = Math.min(value / maxValue, 1);
+
+    const index = Math.floor(normalized * (colorPalette.length - 1));
+
+    return colorPalette[index];
   }
 
   /* автогенерация массива вида 
-    [{x: 1, y: 1, v: 1}, {x: 2, y: 1, v: 1}, {x: 1, y: 2, v: 1}, {x: 2, y: 2, v: 1}]
+    [{x: 1, y: 1, v: 1}, {x: 2, y: 1, v: 10}, {x: 1, y: 2, v: 100}, {x: 2, y: 2, v: 1000}]
     где x - номер недели, y - день недели, v - значение для определения цвета
   */
   (function createData(numWeeks = 24) {
     for (let y = 0; y < 7; y++) {
       for (let x = 0; x < numWeeks; x++) {
-        const randomIndex = Math.floor(Math.random() * colorPalette.length);
+        const active =
+          Math.random() > 0.15 ? Math.floor(Math.random() * 1000) : 0;
 
-        const value = Math.random() > 0.1 ? randomIndex : 0;
-
-        values.push({ x, y, v: value });
+        values.push({ x, y, v: active });
       }
     }
   })();
 
-  const getUniqueCounts = (data) => {
+  const maxActivity = Math.max(...values.map((d) => d.v));
+
+  const { cols, rows } = getUniqueCounts(values);
+
+  function getUniqueCounts(data) {
     const xValues = new Set(data.map((item) => item.x));
     const yValues = new Set(data.map((item) => item.y));
     return {
       cols: xValues.size,
       rows: yValues.size,
     };
-  };
-
-  // для правильного отображения при разных размерах данных
-  const { cols, rows } = getUniqueCounts(values);
+  }
 
   const config = {
     type: "matrix",
@@ -73,20 +80,20 @@ export function initMatrixChart(canvasId = "chart-matrix") {
           anchorX: "start",
           anchorY: "center",
           width: ({ chart }) => {
-            const s = chart.chartArea ? chart.chartArea.width / cols - 5 : 0;
+            const s = chart.chartArea ? chart.chartArea.width / cols - 6 : 0; // -6 расстояние м\у плитками
             return s;
           },
           height: ({ chart }) => {
-            const s = chart.chartArea ? chart.chartArea.width / cols - 5 : 0;
+            const s = chart.chartArea ? chart.chartArea.width / cols - 6 : 0;
             return s;
           },
-          backgroundColor: (ctx) => getColor(ctx.raw?.v || 0),
+          backgroundColor: (ctx) => getColor(ctx.raw?.v || 0, maxActivity),
         },
       ],
     },
     options: {
       responsive: true, // адаптивность при изменении контейнера
-      maintainAspectRatio: true, // сохранять соотношение исходное сторон
+      maintainAspectRatio: true, // сохранять соотношение сторон
       aspectRatio: (cols - 1) / rows, // пропорции для квадрадных плиток
       plugins: {
         legend: { display: false },
@@ -103,15 +110,14 @@ export function initMatrixChart(canvasId = "chart-matrix") {
           padding: 12,
           displayColors: false,
           //   caretSize: 0, // отключить стрелочку
-          backgroundColor: (context) => {
-            return tooltipGradient;
-          },
+          backgroundColor: "#2D2E2F",
+          // управление надписями в tooltip
           callbacks: {
-            title: (tooltipItems) => {
-              const d = tooltipItems[0].raw;
+            title: (context) => {
+              const d = context[0].raw;
               return `${days[d.y]} — Неделя ${d.x + 1}`;
             },
-            label: (tooltipItem) => `Значение: ${tooltipItem.raw.v}`,
+            label: (context) => `Значение: ${context.raw.v}`,
           },
         },
       },

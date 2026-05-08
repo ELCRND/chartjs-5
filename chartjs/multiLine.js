@@ -1,12 +1,12 @@
 /**
- * @param {string} canvasId - id canvas элемента
- * config.datasets - настройки линий и точек
+ * config.datasets - стилизация линий и точек
  * config.options.layout - смещение графика внутри canvas / отступы по краям
  * config.options.plugins.tooltip - tooltip
  * config.options.scales - оси, сетка, подписи
  * config.plugins #customTitle - заголовок над графиком
  * config.plugins #verticalLine - вертикальная линия при наведении
  */
+
 export function initMultiLineChart(canvasId = "chart-multiline") {
   const canvas = document.getElementById(canvasId);
   if (!canvas) {
@@ -41,9 +41,12 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
 
   const ctx = canvas.getContext("2d");
 
-  const tooltipGradient = ctx.createLinearGradient(0, 0, 0, 400);
-  tooltipGradient.addColorStop(0, "#363636");
-  tooltipGradient.addColorStop(1, "#151515");
+  function createGradient(ctx, colorTop, colorBottom) {
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400); // вертикальный градиент
+    gradient.addColorStop(0, colorTop);
+    gradient.addColorStop(1, colorBottom);
+    return gradient;
+  }
 
   const config = {
     type: "line",
@@ -90,7 +93,7 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
     },
     options: {
       responsive: true, // адаптивность при изменении контейнера
-      maintainAspectRatio: true, // сохранять соотношение исходное сторон
+      maintainAspectRatio: true, // сохранять соотношение сторон
 
       layout: {
         padding: {
@@ -109,8 +112,8 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
 
       plugins: {
         legend: { display: false },
+        // tooltip
         tooltip: {
-          // tooltip
           caretPadding: 20, // отступ от точек
           backgroundColor: "#2D2E2F",
           cornerRadius: 32,
@@ -121,7 +124,7 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
           bodySpacing: 8, // расстояние между строками в тултипе
           bodyColor: "#fff",
           borderColor: "#363636",
-          borderWidth: 1,
+          borderWidth: 2,
           padding: 20,
           displayColors: true,
           usePointStyle: true,
@@ -129,11 +132,15 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
           boxHeight: 13, // высота кружка
           caretSize: 0,
           backgroundColor: (context) => {
-            return tooltipGradient;
+            const chart = context.chart;
+            const { ctx, chartArea } = chart;
+            if (!chartArea) return;
+            return createGradient(ctx, "#454545", "#151515");
           },
+          // управление надписями в tooltip
           callbacks: {
-            title: (tooltipItems) => {
-              return ` ${tooltipItems[0].label} июня`;
+            title: (context) => {
+              return ` ${context[0].label} июня`;
             },
             label: (context) => `  $${context.raw}`,
             labelColor: function (context) {
@@ -150,8 +157,7 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
       scales: {
         x: {
           grid: {
-            color: "rgba(156, 163, 175, 0.25)", // цвет сетки
-            lineWidth: 0.5, // толщина линий сетки
+            lineWidth: 2, // толщина линий сетки
             color: function (context) {
               return (context.index + 1) % 5 === 0
                 ? "rgba(156, 163, 175, 0.25)"
@@ -171,11 +177,9 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
         },
         y: {
           // левая шкала
-          //   min: 0,
-          //   max: 4000,
           grid: {
+            lineWidth: 2, // толщина сетки
             color: "rgba(156, 163, 175, 0.25)", // цвет сетки
-            lineWidth: 0.5, // толщина сетки
           },
           ticks: {
             labelOffset: 15, // смещение подписей вниз

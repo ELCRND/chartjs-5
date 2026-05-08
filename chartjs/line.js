@@ -1,10 +1,20 @@
 /**
- * @param {string} canvasId
- * @param {Object | null} colors
- * config.datasets - настройки линии и градиента, дефолтные цвета заданы в @param colors
+ * config.datasets - стилизация линии и градиента. дефолтные цвета заданы в @param colors
  * config.plugins #centerText - надписи и формулы в центре
  */
-export function initLineChart(canvasId = "chart-line", colors = null) {
+
+/**
+ * @param {string} canvasId
+ * @param {Object | null} colors
+ * @param {string[] | null} labels
+ * @param {number[] | null} values
+ */
+export function initLineChart(
+  canvasId = "chart-line",
+  labels = null,
+  values = null,
+  colors = null,
+) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) {
     console.error(`Отсутвует canvas с id ${canvasId}`);
@@ -13,8 +23,8 @@ export function initLineChart(canvasId = "chart-line", colors = null) {
 
   /*  ╔══════════════════════════════════════════════════════════════╗
       ║                            DATA                              ║   */
-  const labels = ["Янв", "Фев", "Март", "Апр", "Май", "Июнь", "Июль"];
-  const values = [20.1, 25.2, 23.3, 18.4, 27.5, 25.6, 24.7];
+  labels = labels || ["Янв", "Фев", "Март", "Апр", "Май", "Июнь", "Июль"];
+  values = values || [20.1, 25.2, 23.3, 18.4, 27.5, 25.6, 24.7];
   /*  ╚══════════════════════════════════════════════════════════════╝  */
 
   const ctx = canvas.getContext("2d");
@@ -50,7 +60,7 @@ export function initLineChart(canvasId = "chart-line", colors = null) {
     },
     options: {
       responsive: true, // адаптивность при изменении контейнера
-      maintainAspectRatio: false, // сохранять соотношение исходное сторон
+      maintainAspectRatio: false, // сохранять соотношение сторон
       plugins: {
         tooltip: { enabled: false },
         legend: { display: false },

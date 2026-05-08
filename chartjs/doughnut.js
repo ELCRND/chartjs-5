@@ -1,5 +1,4 @@
 /**
- * @param {string} canvasId - id canvas элемента
  * config.datasets - цвета, скругление секторов, расстояние м\у секторами
  * config.options - вырез в центре, tooltip
  * config.plugins #centerText - надпись в центре
@@ -70,7 +69,7 @@ export function initDoughnutChart(canvasId = "chart-doughnut") {
     plugins: [
       {
         id: "centerText", // текст
-        afterDraw(chart) {
+        beforeDraw(chart) {
           const { ctx, width, height } = chart;
           ctx.save();
 
@@ -124,7 +123,7 @@ export function initDoughnutChart(canvasId = "chart-doughnut") {
     ],
     options: {
       responsive: true, // адаптивность при изменении контейнера
-      maintainAspectRatio: true, // сохранять соотношение исходное сторон
+      maintainAspectRatio: true, // сохранять соотношение сторон
       cutout: "72%", // вырез в центре
       plugins: {
         tooltip: {

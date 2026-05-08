@@ -17,59 +17,58 @@
         background: #000;
       }
 
-      .chart-card {
+      .chart-container {
+        background: #1a1e1e;
       }
 
-      .chart-card--line {
+      .chart-container--line {
         width: 300px;
         aspect-ratio: 1 / 1;
         border: 2px solid #363636;
         border-radius: 52px;
         overflow: hidden;
-        background: #1a1e1e;
       }
 
-      .chart-card--multiline {
+      .chart-container--multiline {
         width: 800px;
-
-        background: #1a1e1e;
       }
 
-      .chart-card--doughnut {
+      .chart-container--doughnut {
         width: 260px;
-        padding: 10px;
-        background: #1a1e1e;
+        padding: 20px;
       }
 
-      .chart-card--matrix {
+      .chart-container--matrix {
         width: 910px;
-        /* height: 400px; */
-        background: #1a1e1e;
+      }
+
+      .chart-container--bar {
+        width: 800px;
       }
     </style>
   </head>
 
   <body>
-    <!-- 1 Контейнер для удобства можно удалить -->
+    <!-- 1 Контейнер для удобства, можно удалить -->
     <div
       style="
         height: 100dvh;
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 40px;
       "
     >
-      <!-- <img src="1.png" alt="" style="margin-right: 50px" /> -->
       <!-- Линейный график с градиентом -->
-      <div class="chart-card chart-card--line">
+      <div class="chart-container chart-container--line">
         <canvas id="chart-line"></canvas>
       </div>
-      <div class="chart-card chart-card--line">
+      <div class="chart-container chart-container--line">
         <canvas id="chart-line-2"></canvas>
       </div>
     </div>
 
-    <!-- 2 Контейнер для удобства можно удалить -->
+    <!-- 2 Контейнер для удобства, можно удалить -->
     <div
       style="
         height: 100dvh;
@@ -78,14 +77,13 @@
         align-items: center;
       "
     >
-      <!-- <img src="2.png" alt="" style="margin-right: 50px" /> -->
       <!-- multiline график  -->
-      <div class="chart-card chart-card--multiline">
+      <div class="chart-container chart-container--multiline">
         <canvas id="chart-multiline"></canvas>
       </div>
     </div>
 
-    <!-- 3 Контейнер для удобства можно удалить -->
+    <!-- 3 Контейнер для удобства, можно удалить -->
     <div
       style="
         height: 100dvh;
@@ -94,14 +92,13 @@
         align-items: center;
       "
     >
-      <!-- <img src="3.png" alt="" style="margin-right: 50px" /> -->
       <!-- doughnut график  -->
-      <div class="chart-card chart-card--doughnut">
+      <div class="chart-container chart-container--doughnut">
         <canvas id="chart-doughnut"></canvas>
       </div>
     </div>
 
-    <!-- 4 Контейнер для удобства можно удалить -->
+    <!-- 4 Контейнер для удобства, можно удалить -->
     <div
       style="
         height: 100dvh;
@@ -110,10 +107,24 @@
         align-items: center;
       "
     >
-      <img src="4.png" alt="" style="margin-right: 50px" />
       <!-- matrix график  -->
-      <div class="chart-card chart-card--matrix">
+      <div class="chart-container chart-container--matrix">
         <canvas id="chart-matrix"></canvas>
+      </div>
+    </div>
+
+    <!-- 5 Контейнер для удобства, можно удалить -->
+    <div
+      style="
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <!-- matrix график  -->
+      <div class="chart-container chart-container--bar">
+        <canvas id="chart-bar"></canvas>
       </div>
     </div>
 
