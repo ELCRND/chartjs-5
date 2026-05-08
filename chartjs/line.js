@@ -1,21 +1,25 @@
 /**
  * @param {string} canvasId
  * @param {Object | null} colors
+ * config.datasets - настройки линии и градиента, дефолтные цвета заданы в @param colors
+ * config.plugins #centerText - надписи и формулы в центре
  */
-export function initialLineChart(canvasId = "chart-line", colors = null) {
+export function initLineChart(canvasId = "chart-line", colors = null) {
   const canvas = document.getElementById(canvasId);
-
   if (!canvas) {
     console.error(`Отсутвует canvas с id ${canvasId}`);
     return null;
   }
 
-  const ctx = canvas.getContext("2d");
-
-  // data
+  /*  ╔══════════════════════════════════════════════════════════════╗
+      ║                            DATA                              ║   */
   const labels = ["Янв", "Фев", "Март", "Апр", "Май", "Июнь", "Июль"];
   const values = [20.1, 25.2, 23.3, 18.4, 27.5, 25.6, 24.7];
+  /*  ╚══════════════════════════════════════════════════════════════╝  */
 
+  const ctx = canvas.getContext("2d");
+
+  // дефолтные цвета
   colors = colors || {
     firstColor: "rgba(55, 159, 166, 0.5)",
     secondColor: "rgba(55, 159, 166, 0.05)",
@@ -84,7 +88,8 @@ export function initialLineChart(canvasId = "chart-line", colors = null) {
           ctx.fillText("Средний чек", width / 2, height / 6); // позиция заголовка
 
           // сумма
-          ctx.font = 'bold 48px "Segoe UI", system-ui';
+          ctx.font =
+            'bold 48px "Segoe UI", Roboto, Helvetica, Arial, system-ui';
           ctx.fillStyle = "#fff";
           ctx.fillText(`$${checkValue}`, width / 2, height / 2.4);
 

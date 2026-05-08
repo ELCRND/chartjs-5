@@ -1,24 +1,27 @@
 /**
  * @param {string} canvasId - id canvas элемента
+ * config.datasets - настройки линий и точек
+ * config.options.layout - смещение графика внутри canvas / отступы по краям
+ * config.options.plugins.tooltip - tooltip
+ * config.options.scales - оси, сетка, подписи
+ * config.plugins #customTitle - заголовок над графиком
+ * config.plugins #verticalLine - вертикальная линия при наведении
  */
-export function initialMultiLineChart(canvasId = "chart-multiline") {
+export function initMultiLineChart(canvasId = "chart-multiline") {
   const canvas = document.getElementById(canvasId);
   if (!canvas) {
     console.error(`Canvas с id ${canvasId} не найден`);
     return null;
   }
 
-  const ctx = canvas.getContext("2d");
-
-  const tooltipGradient = ctx.createLinearGradient(0, 0, 0, 400);
-  tooltipGradient.addColorStop(0, "#363636");
-  tooltipGradient.addColorStop(1, "#151515");
-
-  // данные, шкала X за 30 дней
+  /*  ╔══════════════════════════════════════════════════════════════╗
+      ║                            DATA                              ║   */
+  //  шкала X за 30 дней
   const labels = Array.from({ length: 30 }, (el, i) =>
     String(i + 1).padStart(2, "0"),
   );
 
+  // данные для линий
   const purpleData = [
     1050, 1100, 1150, 1250, 1600, 1700, 1550, 1650, 1750, 1550, 1650, 1800,
     2100, 2200, 2100, 2300, 2500, 3200, 3800, 4100, 4000, 3900, 3700, 3600,
@@ -34,6 +37,13 @@ export function initialMultiLineChart(canvasId = "chart-multiline") {
     950, 1100, 1250, 1350, 1100, 1050, 1150, 1250, 1200, 1300, 1350, 1400, 1450,
     1480, 1520,
   ];
+  /*  ╚══════════════════════════════════════════════════════════════╝  */
+
+  const ctx = canvas.getContext("2d");
+
+  const tooltipGradient = ctx.createLinearGradient(0, 0, 0, 400);
+  tooltipGradient.addColorStop(0, "#363636");
+  tooltipGradient.addColorStop(1, "#151515");
 
   const config = {
     type: "line",
@@ -100,7 +110,7 @@ export function initialMultiLineChart(canvasId = "chart-multiline") {
       plugins: {
         legend: { display: false },
         tooltip: {
-          enabled: true, // tooltip
+          // tooltip
           caretPadding: 20, // отступ от точек
           backgroundColor: "#2D2E2F",
           cornerRadius: 32,
@@ -110,7 +120,7 @@ export function initialMultiLineChart(canvasId = "chart-multiline") {
           bodyFont: { size: 24, weight: 600 },
           bodySpacing: 8, // расстояние между строками в тултипе
           bodyColor: "#fff",
-          borderColor: "#4d4e52",
+          borderColor: "#363636",
           borderWidth: 1,
           padding: 20,
           displayColors: true,
