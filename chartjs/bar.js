@@ -1,6 +1,7 @@
 /**
- *
- *
+ * config.datasets - Внешний вид столбиков
+ * config.options.plugins.tooltip - Tooltip
+ * config.options.scales - Оси, сетка, подписи
  */
 export function initBarChart(canvasId = "chart-bar") {
   const canvas = document.getElementById(canvasId);
@@ -86,13 +87,14 @@ export function initBarChart(canvasId = "chart-bar") {
           grid: {
             drawTicks: false,
             offset: true,
+            // color: "#363636",
             color: (context) => {
               if (context.index === 0) return "transparent";
 
               const chart = context.chart;
               const { ctx, chartArea } = chart;
+              if (!chartArea) return "#363636";
 
-              if (!chartArea) return;
               return createGradient(ctx, "#1B1B1B", "#363636");
             },
           },

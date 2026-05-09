@@ -1,8 +1,8 @@
 /**
- * config.datasets - цвета, скругление секторов, расстояние м\у секторами
- * config.options - вырез в центре, tooltip
- * config.plugins #centerText - надпись в центре
- * createGradient - градиент
+ * config.datasets - Цвета, скругление секторов, расстояние м\у секторами
+ * config.options - Вырез в центре, tooltip
+ * config.plugins #centerText - Надпись в центре
+ * createGradient - Градиент
  */
 
 export function initDoughnutChart(canvasId = "chart-doughnut") {

@@ -1,7 +1,7 @@
 /**
- * >>> config.datasets <<< - стилизация плиток, цвета заданы в @param colorPalette
- * config.options.plugins.tooltip - tooltip
- * @param values - пустой массив, данные генерируются через  @param createData
+ * config.datasets - Стилизация плиток, расстояние м\у, цвета заданы в @param colorPalette
+ * config.options.plugins.tooltip - Tooltip
+ * @param values - Пустой массив, данные генерируются через  @param createData
  */
 
 export function initMatrixChart(canvasId = "chart-matrix") {
@@ -75,7 +75,7 @@ export function initMatrixChart(canvasId = "chart-matrix") {
           label: "",
           data: values,
           // borderColor: "#1b1b1b", // border плитки
-          //   borderWidth: 1,
+          // borderWidth: 1,
           borderRadius: 5,
           anchorX: "start",
           anchorY: "center",

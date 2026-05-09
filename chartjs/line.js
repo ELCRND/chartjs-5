@@ -1,13 +1,13 @@
 /**
- * config.datasets - стилизация линии и градиента. дефолтные цвета заданы в @param colors
- * config.plugins #centerText - надписи и формулы в центре
+ * config.datasets - Стилизация линии и градиента. дефолтные цвета заданы в @param colors
+ * config.plugins #centerText - Надписи и формулы в центре
  */
 
 /**
  * @param {string} canvasId
- * @param {Object | null} colors
  * @param {string[] | null} labels
  * @param {number[] | null} values
+ * @param {Object | null} colors
  */
 export function initLineChart(
   canvasId = "chart-line",

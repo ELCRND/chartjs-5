@@ -1,10 +1,10 @@
 /**
- * config.datasets - стилизация линий и точек
- * config.options.layout - смещение графика внутри canvas / отступы по краям
- * config.options.plugins.tooltip - tooltip
- * config.options.scales - оси, сетка, подписи
- * config.plugins #customTitle - заголовок над графиком
- * config.plugins #verticalLine - вертикальная линия при наведении
+ * config.datasets - Стилизация линий и точек
+ * config.options.layout - Смещение графика внутри canvas / отступы по краям
+ * config.options.plugins.tooltip - Tooltip
+ * config.options.scales - Оси, сетка, подписи
+ * config.plugins #customTitle - Заголовок над графиком
+ * config.plugins #verticalLine - Вертикальная линия при наведении
  */
 
 export function initMultiLineChart(canvasId = "chart-multiline") {
@@ -134,7 +134,8 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
           backgroundColor: (context) => {
             const chart = context.chart;
             const { ctx, chartArea } = chart;
-            if (!chartArea) return;
+            if (!chartArea) return "#151515";
+
             return createGradient(ctx, "#454545", "#151515");
           },
           // управление надписями в tooltip
@@ -227,7 +228,7 @@ export function initMultiLineChart(canvasId = "chart-multiline") {
           ctx.font = '600 20px "Segoe UI", Roboto, Helvetica, Arial, system-ui';
           ctx.fillStyle = "#9D9D9D";
           ctx.textAlign = "center";
-          ctx.fillText("vs предыдущий период $47,488", width / 2, top - 30);
+          ctx.fillText("vs предыдущий период $47,488", width / 1.7, top - 30);
 
           ctx.restore();
         },
